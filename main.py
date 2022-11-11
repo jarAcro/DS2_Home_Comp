@@ -1,4 +1,5 @@
 import csv
+import datetime
 
 
 # HashMap
@@ -52,32 +53,45 @@ class ChainingHashTable:
                 bucket_list.remove([kv[0], kv[1]])
 
 
+# use nearest neighbor
+
+truck_list = []
+
+
 class Package:
-    def __init__(self, id, address, city, state, zipCode, status):
+    def __init__(self, id, address):
         self.id = id
         self.address = address
-        self.city = city
-        self.state = state
-        self.zipCode = zipCode
-        self.status = status
+        self.timeDelivered = datetime.time(8, 0)
+        self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, &s" % (self.id, self.address, self.city, self.state, self.zipCode, self.status)
+        return "%s, %s" % (self.id, self.address)
+
+    def __repr__(self):
+        return "%s, %s" % (self.id, self.address)
 
 
 def load_package_data(filename):
     with open(filename) as package:
         package_data = csv.reader(package, delimiter=',')
-        next(package_data)  # skips the header
         for packages in package_data:
             pID = packages[0]
             pAddress = packages[1]
-            pCity = packages[2]
-            pState = packages[3]
-            pZip = packages[4]
-            deliverStatus = "Delivered"
-            packages = Package(pID, pAddress, pCity, pState, pZip, deliverStatus)
+
+            packages = Package(pID, pAddress)
             hash_table.insert(pID, packages)
+
+
+def load_distance_data(filename):
+    with open(filename) as file:
+        distance_data = csv.reader(file, delimiter=",")
+        count = 0
+        for distance in distance_data:
+            distance_dict[distance[0]] = count
+            count += 1
+            distance.pop(0)
+            distances.append(distance)
 
 
 # Greedy Algorithm
@@ -87,5 +101,7 @@ def load_package_data(filename):
 hash_table = ChainingHashTable()
 load_package_data("WGUPSPackageFile.csv")
 
-for i in range(len(hash_table.table) + 1):
-    print('Packages: {} and address: {}'.format(i + 1, hash_table.search(i + 1)))
+print(hash_table.table)
+distance_dict = {}
+distances = []
+load_distance_data('WGUPSDistanceTable.csv')

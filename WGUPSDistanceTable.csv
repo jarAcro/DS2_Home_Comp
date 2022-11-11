@@ -1,72 +1,32 @@
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,WGUPS Distance Table,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,NHP1 : WGUPS Routing Program,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-DISTANCE BETWEEN HUBS IN MILES,,"Western Governors University
-4001 South 700 East, 
-Salt Lake City, UT 84107","International Peace Gardens
- 1060 Dalton Ave S","Sugar House Park
- 1330 2100 S","Taylorsville-Bennion Heritage City Gov Off
- 1488 4800 S","Salt Lake City Division of Health Services 
- 177 W Price Ave","South Salt Lake Public Works
- 195 W Oakland Ave","Salt Lake City Streets and Sanitation
- 2010 W 500 S","Deker Lake
- 2300 Parkway Blvd","Salt Lake City Ottinger Hall
- 233 Canyon Rd","Columbus Library
- 2530 S 500 E","Taylorsville City Hall
- 2600 Taylorsville Blvd","South Salt Lake Police
- 2835 Main St","Council Hall
- 300 State St","Redwood Park
- 3060 Lester St","Salt Lake County Mental Health
- 3148 S 1100 W","Salt Lake County/United Police Dept
- 3365 S 900 W","West Valley Prosecutor
- 3575 W Valley Central Sta bus Loop","Housing Auth. of Salt Lake County
- 3595 Main St","Utah DMV Administrative Office
- 380 W 2880 S","Third District Juvenile Court
- 410 S State St","Cottonwood Regional Softball Complex
- 4300 S 1300 E","Holiday City Office
- 4580 S 2300 E","Murray City Museum
- 5025 State St","Valley Regional Softball Complex
- 5100 South 2700 West","City Center of Rock Springs
- 5383 South 900 East #104","Rice Terrace Pavilion Park
- 600 E 900 South","Wheeler Historic Farm 
- 6351 South 900 East"
-"Western Governors University
-4001 South 700 East, 
-Salt Lake City, UT 84107", HUB,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,
-"International Peace Gardens
- 1060 Dalton Ave S"," 1060 Dalton Ave S
-(84104)",7.2,0.0,,,,,,,,,,,,,,,,,,,,,,,,,
-"Sugar House Park
- 1330 2100 S"," 1330 2100 S
-(84106)",3.8,7.1,0.0,,,,,,,,,,,,,,,,,,,,,,,,
-"Taylorsville-Bennion Heritage City Gov Off
- 1488 4800 S"," 1488 4800 S
-(84123)",11.0,6.4,9.2,0.0,,,,,,,,,,,,,,,,,,,,,,,
+#delete names only need address
+
+
+HUB, 0.0
+1060 Dalton Ave S,7.2,0.0
+1330 2100 S,3.8,7.1,0.0
+1488 4800 S
+(84123)",11.0,6.4,9.2,0.0
 "Salt Lake City Division of Health Services 
  177 W Price Ave"," 177 W Price Ave
-(84115)",2.2,6.0,4.4,5.6,0.0,,,,,,,,,,,,,,,,,,,,,,
+(84115)",2.2,6.0,4.4,5.6,0.0
 "South Salt Lake Public Works
  195 W Oakland Ave"," 195 W Oakland Ave
-(84115)",3.5,4.8,2.8,6.9,1.9,0.0,,,,,,,,,,,,,,,,,,,,,
+(84115)",3.5,4.8,2.8,6.9,1.9,0.0
 "Salt Lake City Streets and Sanitation
  2010 W 500 S"," 2010 W 500 S
-(84104)",10.9,1.6,8.6,8.6,7.9,6.3,0.0,,,,,,,,,,,,,,,,,,,,
+(84104)",10.9,1.6,8.6,8.6,7.9,6.3,0.0
 "Deker Lake
  2300 Parkway Blvd"," 2300 Parkway Blvd
-(84119)",8.6,2.8,6.3,4.0,5.1,4.3,4.0,0.0,,,,,,,,,,,,,,,,,,,
+(84119)",8.6,2.8,6.3,4.0,5.1,4.3,4.0,0.0
 "Salt Lake City Ottinger Hall
  233 Canyon Rd"," 233 Canyon Rd
-(84103)",7.6,4.8,5.3,11.1,7.5,4.5,4.2,7.7,0.0,,,,,,,,,,,,,,,,,,
+(84103)",7.6,4.8,5.3,11.1,7.5,4.5,4.2,7.7,0.0
 "Columbus Library
  2530 S 500 E"," 2530 S 500 E
-(84106)",2.8,6.3,1.6,7.3,2.6,1.5,8.0,9.3,4.8,0.0,,,,,,,,,,,,,,,,,
+(84106)",2.8,6.3,1.6,7.3,2.6,1.5,8.0,9.3,4.8,0.0
 "Taylorsville City Hall
  2600 Taylorsville Blvd"," 2600 Taylorsville Blvd
-(84118)",6.4,7.3,10.4,1.0,6.5,8.7,8.6,4.6,11.9,9.4,0.0,,,,,,,,,,,,,,,,
+(84118)",6.4,7.3,10.4,1.0,6.5,8.7,8.6,4.6,11.9,9.4,0.0
 "South Salt Lake Police
  2835 Main St"," 2835 Main St
 (84115)",3.2,5.3,3.0,6.4,1.5,0.8,6.9,4.8,4.7,1.1,7.3,0.0,,,,,,,,,,,,,,,
@@ -112,6 +72,4 @@ Salt Lake City, UT 84107", HUB,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,
 "Rice Terrace Pavilion Park
  600 E 900 South"," 600 E 900 South
 (84105)",5.0,4.4,2.8,10.1,5.4,3.5,5.1,6.2,2.8,3.2,11.0,3.7,2.8,6.4,6.5,5.7,6.2,5.1,4.3,1.8,6.0,7.9,6.8,10.6,7.0,0.0,
-"Wheeler Historic Farm 
- 6351 South 900 East"," 6351 South 900 East
-(84121)",3.6,13.0,7.4,10.1,5.5,7.2,14.2,10.7,14.1,6.0,6.8,6.4,14.1,10.5,8.8,8.4,13.6,5.2,6.9,13.1,4.1,4.7,3.1,7.8,1.3,8.3,0.0
+6351 South 900 East,3.6,13.0,7.4,10.1,5.5,7.2,14.2,10.7,14.1,6.0,6.8,6.4,14.1,10.5,8.8,8.4,13.6,5.2,6.9,13.1,4.1,4.7,3.1,7.8,1.3,8.3,0.0
