@@ -53,11 +53,6 @@ class ChainingHashTable:
                 bucket_list.remove([kv[0], kv[1]])
 
 
-# use nearest neighbor
-
-truck_list = []
-
-
 class Package:
     def __init__(self, id, address):
         self.id = id
@@ -94,14 +89,54 @@ def load_distance_data(filename):
             distances.append(distance)
 
 
+def deliver(truck_list, truck_time):
+    while truck_list:
+        min_so_far = 50
+        min_package = None
+        current_location = 0
+        for id in truck_list:
+            package = hash_table.search(id)
+            address = package.address
+            index = distance_dict[address]
+            distance = distance_between(current_location, index)
+            if min_package is None:
+                min_package = package
+                min_so_far = distance
+            else:
+                if distance < min_so_far:
+                    min_so_far = distance
+                    min_package = package
+
+        # time = distance/speed
+
+        time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))  #
+        truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
+        print(truck_time)
+        truck_list.pop(int(id))
+
+
+def distance_between(loc1, loc2):
+    if loc1 < loc2:
+        return distances[loc2][loc1]
+    else:
+        return distances[loc1][loc2]
+
+
+# use nearest neighbor
+
+truck1_list = ['1', '2']
+truck2_list = [3]
+truck3_list = []
+
 # Greedy Algorithm
 # def greedy_algo:
-
 
 hash_table = ChainingHashTable()
 load_package_data("WGUPSPackageFile.csv")
 
-print(hash_table.table)
+# print(hash_table.table)
 distance_dict = {}
 distances = []
 load_distance_data('WGUPSDistanceTable.csv')
+# print(distances)
+deliver(truck1_list, datetime.time(8, 0))
