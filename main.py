@@ -111,9 +111,9 @@ def deliver(truck_list, truck_time):
 
         time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))  #
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
-        print(truck_time)
-        truck_list.pop(int(id))
 
+        truck_list.pop()
+        print(truck_time)
 
 def distance_between(loc1, loc2):
     if loc1 < loc2:
