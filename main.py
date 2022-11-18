@@ -2,6 +2,7 @@ import csv
 import datetime
 
 
+# ARE MY DATA TYPES RIGHT???
 # HashMap
 # HashTable class using chaining.
 class ChainingHashTable:
@@ -14,32 +15,26 @@ class ChainingHashTable:
             self.table.append([])
 
     # Inserts a new item into the hash table.
-    def insert(self, key, item):
+    def insert(self, package):
         # get the bucket list where this item will go.
-        bucket = hash(key) % len(self.table)
+        bucket = int(package.id) % 10
         bucket_list = self.table[bucket]
 
-        for kv in bucket_list:
-            if kv[0] == key:
-                kv[1] = item
-                return True
-        # insert the item to the end of the bucket list.
-        key_value = [key, item]
-        bucket_list.append(key_value)
+        bucket_list.append(package)  # insert the item to the end of the bucket list.
         return True
 
     # Searches for an item with matching key in the hash table.
     # Returns the item if found, or None if not found.
     def search(self, key):
         # get the bucket list where this key would be.
-        bucket = hash(key) % len(self.table)
+        bucket = int(key) % 10
         bucket_list = self.table[bucket]
 
         # search for the key in the bucket list
-        for key_value in bucket_list:
-            if str(key_value[0]) == key:
-                return key_value[1]
-            return None
+        for package in bucket_list:
+            if package.id == str(key):
+                return package
+        return None
 
     # Removes an item with matching key from the hash table.
     def remove(self, key):
@@ -51,6 +46,9 @@ class ChainingHashTable:
         for kv in bucket_list:
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
+
+
+hash_table = ChainingHashTable()
 
 
 class Package:
@@ -75,7 +73,7 @@ def load_package_data(filename):
             pAddress = packages[1]
 
             packages = Package(pID, pAddress)
-            hash_table.insert(pID, packages)
+            hash_table.insert(packages)
 
 
 def load_distance_data(filename):
@@ -89,6 +87,7 @@ def load_distance_data(filename):
             distances.append(distance)
 
 
+# use nearest neighbor greedy algo
 def deliver(truck_list, truck_time):
     while truck_list:
         min_so_far = 50
@@ -108,12 +107,10 @@ def deliver(truck_list, truck_time):
                     min_package = package
 
         # time = distance/speed
-
-        time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))  #
+        time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
 
         truck_list.pop()
-        print(truck_time)
 
 
 def distance_between(loc1, loc2):
@@ -123,16 +120,10 @@ def distance_between(loc1, loc2):
         return distances[loc1][loc2]
 
 
-# use nearest neighbor
+truck1_list = [2, 4, 14, 19, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18]  # 16
+truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16
+truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8
 
-truck1_list = ['1', '2']
-truck2_list = [3]
-truck3_list = []
-
-# Greedy Algorithm
-# def greedy_algo:
-
-hash_table = ChainingHashTable()
 load_package_data("WGUPSPackageFile.csv")
 
 # print(hash_table.table)
@@ -141,3 +132,4 @@ distances = []
 load_distance_data('WGUPSDistanceTable.csv')
 # print(distances)
 deliver(truck1_list, datetime.time(8, 0))
+print()
