@@ -115,6 +115,7 @@ def deliver(truck_list, truck_time):
         truck_list.pop()
         print(truck_time)
 
+
 def distance_between(loc1, loc2):
     if loc1 < loc2:
         return distances[loc2][loc1]
