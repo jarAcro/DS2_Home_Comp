@@ -1,12 +1,14 @@
+# Chase Jarvis
+# Student ID: 002312909
+
 import csv
 import datetime
 
 
 # ARE MY DATA TYPES RIGHT???
-# HashMap
 # HashTable class using chaining.
 class ChainingHashTable:
-    # Constructor with optional initial capacity parameter.
+
     # Assigns all buckets with an empty list.
     def __init__(self, initial_capacity=39):
         # initialize the hash table with empty bucket list entries.
@@ -52,9 +54,10 @@ hash_table = ChainingHashTable()
 
 
 class Package:
-    def __init__(self, id, address):
+    def __init__(self, id, address, city):
         self.id = id
         self.address = address
+        self.city = city
         self.timeDelivered = datetime.time(8, 0)
         self.timeLoaded = datetime.time(8, 0)
 
@@ -64,18 +67,19 @@ class Package:
     def __repr__(self):
         return "%s, %s" % (self.id, self.address)
 
-
+#Time complexity O(n)
 def load_package_data(filename):
     with open(filename) as package:
         package_data = csv.reader(package, delimiter=',')
         for packages in package_data:
             pID = packages[0]
             pAddress = packages[1]
+            pCity = packages[2]
 
-            packages = Package(pID, pAddress)
+            packages = Package(pID, pAddress, pCity)
             hash_table.insert(packages)
 
-
+#Time complexity O(n)
 def load_distance_data(filename):
     with open(filename) as file:
         distance_data = csv.reader(file, delimiter=",")
@@ -88,31 +92,38 @@ def load_distance_data(filename):
 
 
 # use nearest neighbor greedy algo
+#Time complexity O(n^2)
 def deliver(truck_list, truck_time):
+    total_miles = 0.0
     while truck_list:
-        min_so_far = 50
-        min_package = None
-        current_location = 0
+        min_so_far = 50.0  # the minimum distance at this point
+        min_package = None  # initializing the minimum package to Nothing
+        current_location = 0  # current location initialized to 0
         for id in truck_list:
-            package = hash_table.search(id)
+            package = hash_table.search(
+                id)  # iterating through hashtable, if the id is found the package is added to variable "package"
             address = package.address
-            index = distance_dict[address]
-            distance = distance_between(current_location, index)
-            if min_package is None:
-                min_package = package
-                min_so_far = distance
+            # address of the package object
+            index = distance_dict.get(address)   # assigns the index value of address from the distance dictionary to the "index" variable
+            distance = distance_between(current_location, index)  # utilizes the "distance_between" function to to check the distance between the current location and the next closes index
+            if min_package is None:  # if minimum package is equal to nothing
+                min_package = package # minimum package is assigned to the value of package
+                min_so_far = distance # minimum distance so far assigned to the distance
             else:
-                if distance < min_so_far:
-                    min_so_far = distance
-                    min_package = package
+                if distance < min_so_far:  # check if distance number is less than minimum distance
+                    min_so_far = distance  # the minimum distance is equal to the distance of "distance"
+                    total_miles = total_miles + float(distance)
+                    min_package = package  # min package is assigned to none at the begginning, here it is assigned to the package id
 
         # time = distance/speed
         time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
 
         truck_list.pop()
+        return total_miles, truck_time
 
-
+#Time complexity O(1)
+# in a list of lists its checking the difference between loc1 and loc2,
 def distance_between(loc1, loc2):
     if loc1 < loc2:
         return distances[loc2][loc1]
@@ -120,16 +131,14 @@ def distance_between(loc1, loc2):
         return distances[loc1][loc2]
 
 
-truck1_list = [2, 4, 14, 19, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18]  # 16
+truck1_list = [2, 4, 14, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18, 19]  # 16
 truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16
 truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8
 
 load_package_data("WGUPSPackageFile.csv")
 
-# print(hash_table.table)
 distance_dict = {}
 distances = []
 load_distance_data('WGUPSDistanceTable.csv')
-# print(distances)
-deliver(truck1_list, datetime.time(8, 0))
-print()
+print(deliver(truck1_list, datetime.time(8, 0)))
+print(distances)
