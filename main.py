@@ -136,6 +136,31 @@ def distance_between(loc1, loc2):
         return distances[loc1][loc2]
 
 
+def user_interface():
+    while True:
+        print("****************************************")
+        user_input = input(
+            " User Interface:\n------------------------------\n For information on 1 package, please enter 1.\n "
+            "For information on ALL packages, Please enter 2.\n "
+            "Enter 'done' to exit.\n ****************************************\n")
+
+        if user_input == "done":
+            print("Thank you, Take care now!")
+            break
+
+        if user_input == '1':
+            package_input = int(input("Please provide the ID number for the package you want:\n"))
+            pack = hash_table.search(package_input)
+            print(pack)
+
+        if user_input == '2':
+            pass  # TODO
+
+        if user_input not in ['1', '2', 'done']:
+            print("Invalid input, Please enter 1, 2, or 'done'.")
+            user_interface()
+
+
 distance_dict = {}
 distances = []
 
@@ -147,4 +172,4 @@ load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
 print(deliver(truck1_list, datetime.time(8, 0)))
-
+user_interface()
