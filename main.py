@@ -124,7 +124,7 @@ def deliver(truck_list, truck_time):
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
 
         truck_list.pop()
-    return total_miles, truck_time
+    return round(total_miles, 2), truck_time
 
 
 # Time complexity O(1)
@@ -172,4 +172,3 @@ load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
 print(deliver(truck1_list, datetime.time(8, 0)))
-
