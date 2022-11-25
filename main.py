@@ -67,7 +67,8 @@ class Package:
     def __repr__(self):
         return "%s, %s" % (self.id, self.address)
 
-#Time complexity O(n)
+
+# Time complexity O(n)
 def load_package_data(filename):
     with open(filename) as package:
         package_data = csv.reader(package, delimiter=',')
@@ -79,7 +80,8 @@ def load_package_data(filename):
             packages = Package(pID, pAddress, pCity)
             hash_table.insert(packages)
 
-#Time complexity O(n)
+
+# Time complexity O(n)
 def load_distance_data(filename):
     with open(filename) as file:
         distance_data = csv.reader(file, delimiter=",")
@@ -92,7 +94,7 @@ def load_distance_data(filename):
 
 
 # use nearest neighbor greedy algo
-#Time complexity O(n^2)
+# Time complexity O(n^2)
 def deliver(truck_list, truck_time):
     total_miles = 0.0
     while truck_list:
@@ -104,11 +106,13 @@ def deliver(truck_list, truck_time):
                 id)  # iterating through hashtable, if the id is found the package is added to variable "package"
             address = package.address
             # address of the package object
-            index = distance_dict.get(address)   # assigns the index value of address from the distance dictionary to the "index" variable
-            distance = distance_between(current_location, index)  # utilizes the "distance_between" function to to check the distance between the current location and the next closes index
+            index = distance_dict.get(
+                address)  # assigns the index value of address from the distance dictionary to the "index" variable
+            distance = distance_between(current_location,
+                                        index)  # utilizes the "distance_between" function to to check the distance between the current location and the next closes index
             if min_package is None:  # if minimum package is equal to nothing
-                min_package = package # minimum package is assigned to the value of package
-                min_so_far = distance # minimum distance so far assigned to the distance
+                min_package = package  # minimum package is assigned to the value of package
+                min_so_far = distance  # minimum distance so far assigned to the distance
             else:
                 if distance < min_so_far:  # check if distance number is less than minimum distance
                     min_so_far = distance  # the minimum distance is equal to the distance of "distance"
@@ -120,9 +124,10 @@ def deliver(truck_list, truck_time):
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
 
         truck_list.pop()
-        return total_miles, truck_time
+    return total_miles, truck_time
 
-#Time complexity O(1)
+
+# Time complexity O(1)
 # in a list of lists its checking the difference between loc1 and loc2,
 def distance_between(loc1, loc2):
     if loc1 < loc2:
@@ -131,14 +136,15 @@ def distance_between(loc1, loc2):
         return distances[loc1][loc2]
 
 
-truck1_list = [2, 4, 14, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18, 19]  # 16
+distance_dict = {}
+distances = []
+
+truck1_list = [2, 4, 14, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18, 19]  # 16 truck 1 full of packages
 truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16
 truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8
 
 load_package_data("WGUPSPackageFile.csv")
-
-distance_dict = {}
-distances = []
 load_distance_data('WGUPSDistanceTable.csv')
+
 print(deliver(truck1_list, datetime.time(8, 0)))
-print(distances)
+
