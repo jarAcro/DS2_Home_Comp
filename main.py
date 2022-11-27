@@ -55,7 +55,7 @@ class Package:
         self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
-        return "%s, %s" % (self.id, self.address)
+        return "%s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city, self.state, self.zip, self.delivery_status)
 
 
 
@@ -160,13 +160,14 @@ distance_dict = {}
 distances = []
 
 truck1_list = [2, 4, 14, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18, 19]  # 16 truck 1 full of packages
-truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16 25 adn 26 are same address
+truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16 25 and 26 are same address
 truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8 31 and 32 are the same address
 
 load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
 #print(deliver(truck1_list, datetime.time(8, 0)))
-#print(deliver(truck3_list, datetime.time(12, 0)))
-print(hash_table.search(1))
-#user_interface()
+#print(deliver(truck2_list, datetime.time(9, 5)))
+#print(deliver(truck3_list, datetime.time(10, 30)
+
+user_interface()
