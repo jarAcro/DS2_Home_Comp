@@ -38,34 +38,25 @@ class ChainingHashTable:
                 return package
         return None
 
-    # Removes an item with matching key from the hash table.
-    def remove(self, key):
-        # get the bucket list where this item will be removed from.
-        bucket = hash(key) % len(self.table)
-        bucket_list = self.table[bucket]
-
-        # remove the item from the bucket list if it is present.
-        for kv in bucket_list:
-            if kv[0] == key:
-                bucket_list.remove([kv[0], kv[1]])
-
 
 hash_table = ChainingHashTable()
 
 
 class Package:
-    def __init__(self, id, address, city):
+    def __init__(self, id, address, city, state, zip, delivery_status):
         self.id = id
         self.address = address
         self.city = city
+        self.state = state
+        self.zip = zip
+        self.delivery_status = delivery_status
+
         self.timeDelivered = datetime.time(8, 0)
         self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
         return "%s, %s" % (self.id, self.address)
 
-    def __repr__(self):
-        return "%s, %s" % (self.id, self.address)
 
 
 # Time complexity O(n)
@@ -76,8 +67,11 @@ def load_package_data(filename):
             pID = packages[0]
             pAddress = packages[1]
             pCity = packages[2]
+            pState = packages[3]
+            pZip = packages[4]
+            pDelivery_status = packages[5]
 
-            packages = Package(pID, pAddress, pCity)
+            packages = Package(pID, pAddress, pCity, pState, pZip, pDelivery_status)
             hash_table.insert(packages)
 
 
@@ -95,7 +89,7 @@ def load_distance_data(filename):
 
 # use nearest neighbor greedy algo
 # Time complexity O(n^2)
-def deliver(truck_list, truck_time):
+def deliver(truck_list, truck_time): #TODO breaks for every list but truck1_list
     total_miles = 0.0
     while truck_list:
         min_so_far = 50.0  # the minimum distance at this point
@@ -146,7 +140,8 @@ def user_interface():
 
         if user_input == "done":
             print("Thank you, Take care now!")
-            break
+            exit()
+
 
         if user_input == '1':
             package_input = int(input("Please provide the ID number for the package you want:\n"))
@@ -165,10 +160,13 @@ distance_dict = {}
 distances = []
 
 truck1_list = [2, 4, 14, 16, 13, 15, 5, 7, 8, 9, 10, 11, 12, 17, 18, 19]  # 16 truck 1 full of packages
-truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16
-truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8
+truck2_list = [1, 3, 6, 25, 28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21]  # 16 25 adn 26 are same address
+truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8 31 and 32 are the same address
 
 load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
-print(deliver(truck1_list, datetime.time(8, 0)))
+#print(deliver(truck1_list, datetime.time(8, 0)))
+#print(deliver(truck3_list, datetime.time(12, 0)))
+print(hash_table.search(1))
+#user_interface()
