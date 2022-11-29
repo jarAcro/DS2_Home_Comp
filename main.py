@@ -58,7 +58,6 @@ class Package:
         return "%s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city, self.state, self.zip, self.delivery_status)
 
 
-
 # Time complexity O(n)
 def load_package_data(filename):
     with open(filename) as package:
@@ -89,7 +88,7 @@ def load_distance_data(filename):
 
 # use nearest neighbor greedy algo
 # Time complexity O(n^2)
-def deliver(truck_list, truck_time): #TODO breaks for every list but truck1_list
+def deliver(truck_list, truck_time):  # TODO breaks for every list but truck1_list
     total_miles = 0.0
     while truck_list:
         min_so_far = 50.0  # the minimum distance at this point
@@ -116,7 +115,7 @@ def deliver(truck_list, truck_time): #TODO breaks for every list but truck1_list
         # time = distance/speed
         time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
-
+        min_package.timeDelivered = truck_time
         truck_list.pop()
     return round(total_miles, 2), truck_time
 
@@ -142,18 +141,31 @@ def user_interface():
             print("Thank you, Take care now!")
             exit()
 
-
         if user_input == '1':
-            package_input = int(input("Please provide the ID number for the package you want:\n"))
-            pack = hash_table.search(package_input)
-            print(pack)
+            user_hour = int(input("Please put in hours:\n"))
 
-        if user_input == '2':
-            pass  # TODO
+            user_min = int(input("Please put in minutes:\n"))
 
-        if user_input not in ['1', '2', 'done']:
-            print("Invalid input, Please enter 1, 2, or 'done'.")
-            user_interface()
+            user_time = datetime.datetime(2022, 8, 21, user_hour, user_min).time()
+            # status = ''
+            for packs in range(1, 40):
+                p = hash_table.search(packs)
+                if user_time < p.timeLoaded:
+                    status = "at hub"
+                elif user_time > p.timeDelivered:
+                    status = 'Delivered'
+                else:
+                    status = 'en route'
+
+                print(packs, status)
+                #  self.timeDelivered = datetime.time(8, 0)
+                # self.timeLoaded
+    if user_input == '2':
+        pass  # TODO
+
+    if user_input not in ['1', '2', 'done']:
+        print("Invalid input, Please enter 1, 2, or 'done'.")
+        user_interface()
 
 
 distance_dict = {}
@@ -166,8 +178,17 @@ truck3_list = [22, 23, 24, 26, 27, 33, 35, 39]  # 8 31 and 32 are the same addre
 load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
-#print(deliver(truck1_list, datetime.time(8, 0)))
-#print(deliver(truck2_list, datetime.time(9, 5)))
-#print(deliver(truck3_list, datetime.time(10, 30)
+total_miles1, time1_finished = deliver(truck1_list, datetime.time(8, 0))
+for p in truck2_list:
+    package = hash_table.search(p)
+    package.timeLoaded = datetime.time(9, 5)
+total_miles2, time2_finished = deliver(truck2_list, datetime.time(9, 5))
+
+for p in truck3_list:
+    package = hash_table.search(p)
+    package.timeLoaded = time1_finished
+
+total_miles3, time3_finished = deliver(truck3_list, time1_finished)
+all_miles = total_miles1 + total_miles2 + total_miles3
 
 user_interface()
