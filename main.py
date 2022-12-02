@@ -10,7 +10,7 @@ import datetime
 class ChainingHashTable:
 
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=39):
+    def __init__(self, initial_capacity=40):
         # initialize the hash table with empty bucket list entries.
         self.table = []
         for i in range(initial_capacity):
@@ -55,7 +55,7 @@ class Package:
         self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city, self.state, self.zip, self.delivery_status)
+        return "%s, %s, %s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city, self.state, self.zip, self.delivery_status, self.timeLoaded, self.timeDelivered)
 
 
 # Time complexity O(n)
@@ -88,7 +88,7 @@ def load_distance_data(filename):
 
 # use nearest neighbor greedy algo
 # Time complexity O(n^2)
-def deliver(truck_list, truck_time):  # TODO breaks for every list but truck1_list
+def deliver(truck_list, truck_time):
     total_miles = 0.0
     while truck_list:
         min_so_far = 50.0  # the minimum distance at this point
@@ -137,35 +137,52 @@ def user_interface():
             "For information on ALL packages, Please enter 2.\n "
             "Enter 'done' to exit.\n ****************************************\n")
 
+
         if user_input == "done":
             print("Thank you, Take care now!")
             exit()
 
         if user_input == '1':
+
             user_hour = int(input("Please put in hours:\n"))
 
             user_min = int(input("Please put in minutes:\n"))
 
             user_time = datetime.datetime(2022, 8, 21, user_hour, user_min).time()
             # status = ''
-            for packs in range(1, 40):
+            for packs in range(1, 41):
                 p = hash_table.search(packs)
                 if user_time < p.timeLoaded:
-                    status = "at hub"
+                    status = "The package is at the hub"
                 elif user_time > p.timeDelivered:
-                    status = 'Delivered'
+                    status = 'The package has been Delivered'
                 else:
-                    status = 'en route'
+                    status = 'The package is en route'
 
-                print(packs, status)
-                #  self.timeDelivered = datetime.time(8, 0)
-                # self.timeLoaded
-    if user_input == '2':
-        pass  # TODO
+                print(p, packs, status)
 
-    if user_input not in ['1', '2', 'done']:
-        print("Invalid input, Please enter 1, 2, or 'done'.")
-        user_interface()
+        if user_input == '2':
+            user_hour = int(input("Please put in hours:\n"))
+
+            user_min = int(input("Please put in minutes:\n"))
+
+            user_time = datetime.datetime(2022, 8, 21, user_hour, user_min).time()
+
+            pack_id = int(input("Please give package ID\n"))
+            p = hash_table.search(pack_id)
+
+            if user_time < p.timeLoaded:
+                status = "The package is at the hub"
+            elif user_time > p.timeDelivered:
+                status = 'The package has been Delivered'
+            else:
+                status = 'The package is en route'
+            print("Package ID, Package Address, Delivery Deadline, Time Loaded, Time delivered, Package Status")
+            print(p, status)
+
+        if user_input not in ['1', '2', 'done']:
+            print("Invalid input, Please enter 1, 2, or 'done'.")
+            user_interface()
 
 
 distance_dict = {}
@@ -192,3 +209,6 @@ total_miles3, time3_finished = deliver(truck3_list, time1_finished)
 all_miles = total_miles1 + total_miles2 + total_miles3
 
 user_interface()
+
+#TODO check formula that calculates minutes
+#TODO find out why time to location is the same for most packages
