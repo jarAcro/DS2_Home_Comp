@@ -55,7 +55,9 @@ class Package:
         self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city, self.state, self.zip, self.delivery_status, self.timeLoaded, self.timeDelivered)
+        return "%s, %s, %s, %s, %s, %s, %s, %s" % (
+        self.id, self.address, self.city, self.state, self.zip, self.delivery_status, self.timeLoaded,
+        self.timeDelivered)
 
 
 # Time complexity O(n)
@@ -133,10 +135,9 @@ def user_interface():
     while True:
         print("****************************************")
         user_input = input(
-            " User Interface:\n------------------------------\n For information on 1 package, please enter 1.\n "
-            "For information on ALL packages, Please enter 2.\n "
+            " User Interface:\n------------------------------\n For information on ALL packages, please enter 1.\n "
+            "For information on ONE package, Please enter 2.\n "
             "Enter 'done' to exit.\n ****************************************\n")
-
 
         if user_input == "done":
             print("Thank you, Take care now!")
@@ -158,8 +159,9 @@ def user_interface():
                     status = 'The package has been Delivered'
                 else:
                     status = 'The package is en route'
-
-                print(p, packs, status)
+                print(
+                    "ID,_____Package Address__________Delivery Deadline, Time Loaded,_Time delivered__Package Status_______All trucks distance")
+                print(p, packs, status, 'All Miles travelled by trucks: ', all_miles)
 
         if user_input == '2':
             user_hour = int(input("Please put in hours:\n"))
@@ -172,13 +174,14 @@ def user_interface():
             p = hash_table.search(pack_id)
 
             if user_time < p.timeLoaded:
-                status = "The package is at the hub"
+                status = "The package is at the hub."
             elif user_time > p.timeDelivered:
-                status = 'The package has been Delivered'
+                status = 'The package has been Delivered.'
             else:
-                status = 'The package is en route'
-            print("Package ID, Package Address, Delivery Deadline, Time Loaded, Time delivered, Package Status")
-            print(p, status)
+                status = 'The package is en route.'
+            print(
+                "ID,_____Package Address__________Delivery Deadline, ____Time Loaded,_Time delivered__Package Status_______All trucks distance")
+            print(p, status, 'All Miles travelled by trucks: ', all_miles)
 
         if user_input not in ['1', '2', 'done']:
             print("Invalid input, Please enter 1, 2, or 'done'.")
@@ -206,9 +209,9 @@ for p in truck3_list:
     package.timeLoaded = time1_finished
 
 total_miles3, time3_finished = deliver(truck3_list, time1_finished)
-all_miles = total_miles1 + total_miles2 + total_miles3
+all_miles = round(total_miles1 + total_miles2 + total_miles3, 2)
 
 user_interface()
 
-#TODO check formula that calculates minutes
-#TODO find out why time to location is the same for most packages
+# TODO check formula that calculates minutes
+# TODO find out why time to location is the same for most packages
