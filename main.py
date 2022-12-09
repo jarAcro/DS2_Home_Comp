@@ -5,7 +5,6 @@ import csv
 import datetime
 
 
-
 # HashTable class using chaining.
 class ChainingHashTable:
 
@@ -94,14 +93,17 @@ def deliver(truck_list, truck_time):
     total_miles = 0.0
     while truck_list:
         min_so_far = 50.0  # the minimum distance at this point
-        min_package = None # initializing the minimum package to Nothing
+        min_package = None  # initializing the minimum package to Nothing
         current_location = 0  # current location initialized to 0
         for id in truck_list:
-            package = hash_table.search(id)  # iterating through hashtable, if the id is found the package is added to variable "package"
-            address = package.address # address of the package object
-            index = distance_dict.get(address)  # assigns the index value of address from the distance dictionary to the "index" variable
-            distance = distance_between(current_location, index) # utilizes the "distance_between" function to check the distance between the current location and the next closes index
-            if min_package is None: # if minimum package is equal to nothing
+            package = hash_table.search(
+                id)  # iterating through hashtable, if the id is found the package is added to variable "package"
+            address = package.address  # address of the package object
+            index = distance_dict.get(
+                address)  # assigns the index value of address from the distance dictionary to the "index" variable
+            distance = distance_between(current_location,
+                                        index)  # utilizes the "distance_between" function to check the distance between the current location and the next closes index
+            if min_package is None:  # if minimum package is equal to nothing
                 min_so_far = distance
                 min_package = package  # minimum distance so far assigned to the distance
             elif distance < min_so_far:  # check if distance number is less than minimum distance
@@ -116,8 +118,6 @@ def deliver(truck_list, truck_time):
     return round(total_miles, 2), truck_time
 
 
-# TODO check formula that calculates minutes
-# TODO find out why time to location is the same for most packages
 # Time complexity O(1)
 
 def distance_between(loc1, loc2):
@@ -126,7 +126,8 @@ def distance_between(loc1, loc2):
     else:
         return distances[loc1][loc2]
 
-#time complexity O(n)
+
+# time complexity O(n)
 def user_interface():
     while True:
         print("****************************************")
@@ -185,10 +186,11 @@ def user_interface():
 distance_dict = {}
 distances = []
 
+
 # Truck assignments.
-truck1_list = [4, 14, 16, 13, 15, 5, 7, 8, 10, 11, 12, 17, 18, 19, 25, 26]  # 16 truck 1 full of packages
-truck2_list = [1, 3, 6,  28, 32, 36, 38, 29, 30, 31, 34, 37, 40, 20, 21, 2]  # 16 25 and 26 are same address
-truck3_list = [22, 23, 24, 27, 33, 35, 39, 9]  # 8 31 and 32 are the same address
+truck1_list = [14, 34, 22, 23, 29, 24, 26, 11, 12, 33, 17, 40, 30, 1, 21, 7]  # 16
+truck2_list = [28, 32, 37, 10, 27, 8, 3, 13, 18, 19, 36, 6, 20, 16, 38, 15]  # 16
+truck3_list = [31, 9, 35, 39, 2, 4, 5, 25]  # 8
 
 # loading the data from the csv files.
 load_package_data("WGUPSPackageFile.csv")
