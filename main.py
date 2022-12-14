@@ -54,8 +54,8 @@ class Package:
         self.timeLoaded = datetime.time(8, 0)
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, %s, %s, %s" % (
-            self.id, self.address, self.city, self.state, self.zip, self.delivery_status, self.timeLoaded,
+        return "%s, %s, %s, %s, %s, %s, %s" % (
+            self.id, self.address, self.city, self.state, self.zip, self.delivery_status,
             self.timeDelivered)
 
 
@@ -102,8 +102,9 @@ def deliver(truck_list, truck_time):
             address = package.address  # address of the package object
             index = distance_dict.get(
                 address)  # assigns the index value of address from the distance dictionary to the "index" variable
-            distance = float(distance_between(current_location, index))  # utilizes the "distance_between" function to check the distance between the current location and the next closes index
-            if id in [6, 25 ,31]:
+            distance = float(distance_between(current_location,
+                                              index))  # utilizes the "distance_between" function to check the distance between the current location and the next closes index
+            if id in [6, 25, 31, 32,29]:
                 min_so_far = distance
                 min_package = package
                 break
@@ -152,7 +153,7 @@ def user_interface():
             user_min = int(input("Please put in minutes:\n"))
 
             user_time = datetime.datetime(2022, 8, 21, user_hour, user_min).time()
-            print("ID,_____Package Address_____________Delivery Deadline, Time Loaded,_Time delivered__Package Status")
+            print("ID,_____Package Address_____________Delivery Deadline,_Time delivered__Package Status")
             for packs in range(1, 41):
                 p = hash_table.search(packs)
                 if user_time < p.timeLoaded:
@@ -180,7 +181,7 @@ def user_interface():
             else:
                 status = 'The package is en route.'
             print(
-                "ID,_____Package Address_____________Delivery Deadline, ____Time Loaded,_Time delivered__Package Status_______All trucks distance")
+                "ID,_____Package Address_____________Delivery Deadline,_Time delivered__Package Status_______All trucks distance")
             print(p, status)
 
         if user_input not in ['1', '2', 'done']:
@@ -193,9 +194,11 @@ distance_dict = {}
 distances = []
 
 # Truck assignments.
-truck1_list = [26, 11, 12, 33, 17, 40, 30, 1, 20, 21, 7, 13, 14,  19,15, 16]  # 16
-truck2_list = [36, 6, 38, 10, 34, 22, 23, 29, 24,28, 32, 37, 27, 8, 3, 18]  # 16
-truck3_list = [31, 9, 35, 39, 2, 4, 5, 25]  # 8
+truck1_list = [1, 40, 9, 30, 19, 20, 4, 13, 39, 11, 12, 14, 16, 17, 34, 15]
+
+truck2_list = [32,31, 24, 29 ,28, 5, 38,  37, 3, 36, 6, 26, 25, 18, 22, 23]
+
+truck3_list = [35, 27, 8, 10, 33, 21, 7, 2]  # 8
 
 # loading the data from the csv files.
 load_package_data("WGUPSPackageFile.csv")
@@ -210,7 +213,7 @@ total_miles2, time2_finished = deliver(truck2_list, datetime.time(9, 5))
 
 for p in truck3_list:
     package = hash_table.search(p)
-    package.timeLoaded = datetime.time(10, 0)
+    package.timeLoaded = datetime.time(9, 5)
 
 total_miles3, time3_finished = deliver(truck3_list, time1_finished)
 all_miles = round(total_miles1 + total_miles2 + total_miles3, 2)
