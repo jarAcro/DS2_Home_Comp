@@ -92,6 +92,7 @@ def load_distance_data(filename):
 def deliver(truck_list, truck_time):
     total_miles = 0.0
     current_location = 0  # current location initialized to 0
+
     while truck_list:
         min_so_far = 50.0  # the minimum distance at this point
         min_package = None  # initializing the minimum package to Nothing
@@ -104,7 +105,7 @@ def deliver(truck_list, truck_time):
                 address)  # assigns the index value of address from the distance dictionary to the "index" variable
             distance = float(distance_between(current_location,
                                               index))  # utilizes the "distance_between" function to check the distance between the current location and the next closes index
-            if id in [6, 25, 31, 32,29]:
+            if id in [6, 25, 31, 32, 29, 37]:
                 min_so_far = distance
                 min_package = package
                 break
@@ -118,6 +119,7 @@ def deliver(truck_list, truck_time):
         current_location = distance_dict.get(
             min_package.address)  # min package is assigned to none at the beginning, here it is assigned to the package id
         total_miles = total_miles + float(distance)
+
         time_to_location = datetime.timedelta(minutes=((float(min_so_far) * 60) / 18))
         truck_time = (datetime.datetime.combine(datetime.datetime.today(), truck_time) + time_to_location).time()
         min_package.timeDelivered = truck_time
@@ -196,7 +198,7 @@ distances = []
 # Truck assignments.
 truck1_list = [1, 40, 9, 30, 19, 20, 4, 13, 39, 11, 12, 14, 16, 17, 34, 15]
 
-truck2_list = [32,31, 24, 29 ,28, 5, 38,  37, 3, 36, 6, 26, 25, 18, 22, 23]
+truck2_list = [26, 25, 32, 31, 24, 29, 28, 5, 38, 37, 3, 36, 6, 18, 22, 23]
 
 truck3_list = [35, 27, 8, 10, 33, 21, 7, 2]  # 8
 
@@ -205,15 +207,18 @@ load_package_data("WGUPSPackageFile.csv")
 load_distance_data('WGUPSDistanceTable.csv')
 
 # the calculation for time stamping the truck deliveries.
+
 total_miles1, time1_finished = deliver(truck1_list, datetime.time(8, 0))
 for p in truck2_list:
     package = hash_table.search(p)
     package.timeLoaded = datetime.time(9, 5)
+
 total_miles2, time2_finished = deliver(truck2_list, datetime.time(9, 5))
 
 for p in truck3_list:
     package = hash_table.search(p)
     package.timeLoaded = datetime.time(9, 5)
+
 
 total_miles3, time3_finished = deliver(truck3_list, time1_finished)
 all_miles = round(total_miles1 + total_miles2 + total_miles3, 2)
